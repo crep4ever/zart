@@ -43,10 +43,9 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 
-#include <iostream>
-using namespace std;
 #include <QApplication>
 #include <QMessageBox>
+#include <QTextStream>
 #include "WebcamGrabber.h"
 #include "Common.h"
 #include "MainWindow.h"
@@ -57,16 +56,33 @@ int main( int argc, char *argv[] )
   app.setWindowIcon( QIcon(":images/icon.png") );
   app.setApplicationName( "ZArt" );
 
+  // Parse command line arguments
   QStringList args = app.arguments();
-  if ( args.size() == 2 && ( args[1] == "-h" || args[1] == "--help") ) {
-     cout << "Usage:" << endl
-          << "       " << QFileInfo(argv[0]).baseName().toAscii().constData() << " [options]" << endl
-          << "   " << "Options: " << endl
-          << "       --help | -h : print this help." << endl
-          << "       --cam N     : disable camera detection and force selection of" << endl
-          << "                     camera with index N." << endl
-          << endl;
-     exit(EXIT_FAILURE);
+  bool helpFlag = false;;
+  bool versionFlag = false;
+  if (args.contains("-h") || args.contains("--help"))
+    helpFlag = true;
+  else if (args.contains("--version"))
+    versionFlag = true;
+
+  if (helpFlag) {
+     QTextStream out(stdout);
+     out << "Usage: " << QApplication::applicationName() << "[OPTION]" << endl
+	 << "Options:" << endl
+	 << "    " << "-h, --help : print this help." << endl
+	 << "    " << "--version  : print the version of the application." << endl
+	 << "    " << "--cam N    : disable camera detection and force selection of" << endl
+	 << "                 camera with index N." << endl
+	 << " " << QApplication::applicationVersion()
+	 << endl;
+     return 0;
+  }
+  else if (versionFlag) {
+     QTextStream out(stdout);
+     out << QApplication::applicationName()
+	 << " " << QApplication::applicationVersion()
+	 << endl;
+     return 0;
   }
 
   if ( ! WebcamGrabber::getWebcamList().count() ) {
