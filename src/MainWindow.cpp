@@ -78,8 +78,7 @@
 #include "FilterThread.h"
 
 MainWindow::MainWindow( QWidget * parent )
-   : QMainWindow( parent ),
-     _currentDir( "." )
+   : QMainWindow( parent )
 {
    setupUi(this);
    setWindowTitle( QString("ZArt %1").arg((ZART_VERSION)) );
@@ -328,6 +327,8 @@ MainWindow::MainWindow( QWidget * parent )
    }
 
    _filterThread = 0;
+
+   readSettings();
 }
 
 MainWindow::~MainWindow()
@@ -335,6 +336,31 @@ MainWindow::~MainWindow()
    _filterThread->stop();
    _filterThread->wait();
    delete _filterThread;
+}
+
+void
+MainWindow::readSettings()
+{
+   QSettings settings;
+   settings.beginGroup("snapshot");
+   _currentDir = settings.value("path", QDir::homePath()).toString();
+   settings.endGroup();
+}
+
+void
+MainWindow::writeSettings()
+{
+   QSettings settings;
+   settings.beginGroup("snapshot");
+   settings.setValue("path", _currentDir);
+   settings.endGroup();
+}
+
+void
+MainWindow::closeEvent( QCloseEvent *event )
+{
+   writeSettings();
+   event->accept();
 }
 
 void

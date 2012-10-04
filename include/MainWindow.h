@@ -70,6 +70,8 @@ public:
    ~MainWindow();
    QString getPreset( const QString & name );
 
+   void readSettings();
+   void writeSettings();
 
 public slots:
 
@@ -99,6 +101,9 @@ public slots:
    void onPreviewModeChanged( int index );
    void onRightPanel( bool );
    void onPlay();
+
+protected:
+   void closeEvent(QCloseEvent *event);
 
 private:
 
