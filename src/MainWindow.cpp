@@ -602,7 +602,7 @@ MainWindow::setPresetsFile()
 {
    QString filename = QFileDialog::getOpenFileName( this,
 						    tr("Open a presets file"),
-						    ".",
+						    QDir::currentPath(),
 						    tr("Preset files (*.xml)") );
    if ( ! filename.isEmpty() ) {
       globalSettings.setValue( "PresetsFile", filename );
@@ -623,7 +623,7 @@ MainWindow::savePresetsFile()
 {
    QString filename = QFileDialog::getSaveFileName( this,
 						    tr("Save presets file"),
-						    ".",
+						    QDir::currentPath(),
 						    tr("Preset files (*.xml)") );
    if ( ! filename.isEmpty() ) {
       QFile presetsFile( filename );
