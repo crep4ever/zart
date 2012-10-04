@@ -33,6 +33,8 @@ SOURCES	+= src/Settings.cpp \
 RESOURCES = zart.qrc
 FORMS = ui/MainWindow.ui ui/DialogAbout.ui ui/DialogLicence.ui
 
+TRANSLATIONS = lang/zart_fr.ts
+
 LIBS += -lX11 ../src/libgmic.a `pkg-config opencv --libs` -lfftw3
 
 PRE_TARGETDEPS +=  

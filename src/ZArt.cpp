@@ -90,6 +90,21 @@ int main( int argc, char *argv[] )
      exit(EXIT_FAILURE);
   }
 
+  // Localization
+  QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8")) ;
+  QDir translationDirectory;
+  QString translationFilename = QString("zart_%1.qm").arg(QLocale::system().name().split('_').first());
+  QString directory;
+
+  if (translationDirectory.exists())
+     directory = translationDirectory.absoluteFilePath("lang");
+  else
+     directory = QDir::current().absoluteFilePath("lang");
+
+  QTranslator translator;
+  translator.load(translationFilename, directory);
+  app.installTranslator(&translator);
+
   MainWindow *mainWindow = new MainWindow;
   mainWindow->show();
   return app.exec();
