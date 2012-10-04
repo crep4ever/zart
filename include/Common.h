@@ -50,6 +50,7 @@
 #include <iostream>
 #define SHOW( V ) std::cout << " " #V " = " << ( V ) << std::endl
 
-#define ZART_VERSION "1.0.0"
+#define ZART_APPLICATION_NAME "ZArt"
+#define ZART_APPLICATION_VERSION "1.0.0"
 
 #endif

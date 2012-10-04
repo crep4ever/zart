@@ -66,7 +66,6 @@
 #include <QKeySequence>
 #include <QShortcut>
 
-#include "Common.h"
 #include "DialogAbout.h"
 #include "DialogLicence.h"
 #include "ImageConverter.h"
@@ -80,7 +79,9 @@ MainWindow::MainWindow( QWidget * parent )
    : QMainWindow( parent )
 {
    setupUi(this);
-   setWindowTitle( QString("ZArt %1").arg((ZART_VERSION)) );
+   setWindowTitle( QString("%1 %2")
+		   .arg(QApplication::applicationName())
+		   .arg(QApplication::applicationVersion()) );
 
 #if QT_VERSION > 0x040600
    _tbPlay->setIcon( QIcon::fromTheme("media-playback-start",QIcon(":/images/media-playback-start.png")) );

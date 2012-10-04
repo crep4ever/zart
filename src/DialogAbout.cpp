@@ -44,7 +44,6 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 #include "DialogAbout.h"
-#include "Common.h"
 
 /**
  * Constructor
@@ -53,8 +52,8 @@ DialogAbout::DialogAbout( QWidget * parent )
    :QDialog( parent ) 
 {
    setupUi( this );
-   setWindowTitle("About ZArt");
+   setWindowTitle( QString("About %1").arg(QApplication::applicationName()) );
    QString str = _topLabel->text();
-   str.replace( "VERSION", ZART_VERSION );
+   str.replace( "VERSION", QApplication::applicationVersion() );
    _topLabel->setText( str );
 }

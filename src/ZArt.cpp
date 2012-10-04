@@ -53,9 +53,9 @@
 int main( int argc, char *argv[] )
 {
   QApplication app( argc, argv );
-  app.setWindowIcon( QIcon(":images/icon.png") );
-  app.setApplicationName( "ZArt" );
-  QApplication::setApplicationVersion( "1.0.0" );
+  QApplication::setWindowIcon( QIcon(":images/icon.png") );
+  QApplication::setApplicationName( ZART_APPLICATION_NAME );
+  QApplication::setApplicationVersion( ZART_APPLICATION_VERSION );
 
   // Parse command line arguments
   QStringList args = app.arguments();
@@ -87,7 +87,8 @@ int main( int argc, char *argv[] )
   }
 
   if ( ! WebcamGrabber::getWebcamList().count() ) {
-     QMessageBox::critical(0,QString("ZArt %1: Error").arg(ZART_VERSION),"No webcam found.<br/><br/>(ZArt is useless without a webcam!)");
+     QMessageBox::critical(0, QString("%1 %2").arg(QApplication::applicationVersion()).arg(QApplication::applicationVersion()),
+			   "No webcam found.<br/><br/>(ZArt is useless without a webcam!)");
      exit(EXIT_FAILURE);
   }
 
