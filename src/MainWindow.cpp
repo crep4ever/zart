@@ -95,9 +95,9 @@ MainWindow::MainWindow( QWidget * parent )
 
    // Menu and actions
    QMenu * menu;
-   menu = menuBar()->addMenu( "&File" );
+   menu = menuBar()->addMenu( tr("&File") );
 
-   QAction * action = new QAction( "&Save presets...", this );
+   QAction * action = new QAction( tr("&Save presets..."), this );
    action->setShortcut( QKeySequence::SaveAs );
 #if QT_VERSION > 0x040600
    action->setIcon( QIcon::fromTheme( "document-save-as" ) );
@@ -106,7 +106,7 @@ MainWindow::MainWindow( QWidget * parent )
    connect( action, SIGNAL( triggered() ),
   	   this, SLOT( savePresetsFile() ) );
 
-   action = new QAction( "&Quit", this );
+   action = new QAction( tr("&Quit"), this );
    action->setShortcut( QKeySequence::Quit );
 #if QT_VERSION > 0x040600
    action->setIcon( QIcon::fromTheme( "application-exit", QIcon(":/images/application-exit.png") ) );
@@ -126,7 +126,7 @@ MainWindow::MainWindow( QWidget * parent )
       // Find available cameras, and setup the default one
       QList<int> cameras = WebcamGrabber::getWebcamList();
       if ( cameras.size() > 1 ) {
-         webcamMenu = menuBar()->addMenu( "&Webcam" );
+         webcamMenu = menuBar()->addMenu( tr("&Webcam") );
          QActionGroup * actionGroup = new QActionGroup(this);
          actionGroup->setExclusive(true);
          QAction * action;
@@ -157,9 +157,9 @@ MainWindow::MainWindow( QWidget * parent )
 	   this, SLOT(networkReplyFinished(QNetworkReply*)) );
 
    // Options menu
-   menu = menuBar()->addMenu( "&Options" );
+   menu = menuBar()->addMenu( tr("&Options") );
 
-   action = new QAction("Show right panel",this);
+   action = new QAction(tr("Show right panel"),this);
    action->setCheckable(true);
    action->setChecked(true);
    action->setShortcut(QKeySequence("Ctrl+F"));
@@ -168,7 +168,7 @@ MainWindow::MainWindow( QWidget * parent )
    menu->addAction(action);
 
    menu->addSeparator();
-   action = new QAction( "&Get online presets", this );
+   action = new QAction( tr("&Get online presets"), this );
    action->setCheckable( true );
    connect( action, SIGNAL( toggled(bool ) ),
 	   this, SLOT( onGetOnlinePresets(bool ) ) );
@@ -177,7 +177,7 @@ MainWindow::MainWindow( QWidget * parent )
    // Get online presets if configured.
    onGetOnlinePresets( globalSettings.value( "GetOnlinePresets", false ).toBool() );
 
-   action = new QAction( "&Set preset file...", this );
+   action = new QAction( tr("&Set preset file..."), this );
 #if QT_VERSION > 0x040600
    action->setIcon( QIcon::fromTheme( "document-open", QIcon(":/images/document-open.png") ) );
 #else
@@ -199,7 +199,7 @@ MainWindow::MainWindow( QWidget * parent )
       addPresets( _presets.elementsByTagName("document").at(0).toElement(), 0 );
    }
 
-   action = new QAction( "&Use built-in presets", this );
+   action = new QAction( tr("&Use built-in presets"), this );
    connect( action, SIGNAL( triggered() ),
 	   this, SLOT( onUseBuiltinPresets() ) );
    menu->addAction( action );
@@ -207,19 +207,19 @@ MainWindow::MainWindow( QWidget * parent )
          && globalSettings.value( "PresetsFile", QString() ).toString().isEmpty() )
       onUseBuiltinPresets();
 
-   menu = menuBar()->addMenu( "&Help" );
+   menu = menuBar()->addMenu( tr("&Help") );
 
-   action = new QAction( "&Visit G'MIC website", this );
+   action = new QAction( tr("&Visit G'MIC website"), this );
    connect( action, SIGNAL( triggered() ),
            this, SLOT( visitGMIC() ) );
    menu->addAction( action );
 
-   action = new QAction( "&Licence...", this );
+   action = new QAction( tr("&Licence..."), this );
    connect( action, SIGNAL( triggered() ),
            this, SLOT( licence() ) );
    menu->addAction( action );
 
-   action = new QAction( "&About...", this );
+   action = new QAction( tr("&About..."), this );
    connect( action, SIGNAL( triggered() ),
            this, SLOT( about() ) );
    menu->addAction( action );
@@ -251,7 +251,7 @@ MainWindow::MainWindow( QWidget * parent )
             this, SLOT(onPreviewModeChanged(int)));
 
    QShortcut * sc = new QShortcut(QKeySequence("Ctrl+P"),this);
-   _tbPlay->setToolTip("Launch processing (Ctrl+P)");
+   _tbPlay->setToolTip(tr("Launch processing (Ctrl+P)"));
    connect( sc, SIGNAL(activated()),
            this, SLOT(onPlay()) );
    connect( _tbPlay, SIGNAL(clicked()),
@@ -322,7 +322,7 @@ MainWindow::MainWindow( QWidget * parent )
               this, SLOT( onCascadeChanged( const QString & ) ) );
    } else {
       _rbOpenCV->setEnabled(false);
-      _cbCascades->addItem("No xml files found");
+      _cbCascades->addItem(tr("No xml files found"));
       _cbCascades->setEnabled(false);
    }
 
@@ -470,7 +470,7 @@ MainWindow::onPlay()
 #else
    _tbPlay->setIcon( QIcon(":/images/media-playback-start.png") );
 #endif
-   _tbPlay->setToolTip("Launch processing (Ctrl+P)");
+   _tbPlay->setToolTip(tr("Launch processing (Ctrl+P)"));
   } else {
      play();
 #if QT_VERSION > 0x040600
@@ -478,7 +478,7 @@ MainWindow::onPlay()
 #else
    _tbPlay->setIcon( QIcon(":/images/media-playback-stop.png") );
 #endif
-   _tbPlay->setToolTip("Stop processing (Ctrl+P)");
+   _tbPlay->setToolTip(tr("Stop processing (Ctrl+P)"));
   }
 }
 
@@ -529,11 +529,11 @@ MainWindow::snapshot()
    if ( _filterThread )
       _tbPlay->click();
    QString filename = QFileDialog::getSaveFileName( this,
-						   "Save image as...",
-						   _currentDir,
-						   _imageFilters,
-						   0,
-						   0 );
+						    tr("Save image as..."),
+						    _currentDir,
+						    _imageFilters,
+						    0,
+						    0 );
    if ( ! filename.isEmpty() ) {
       QFileInfo info( filename );
       _currentDir = info.filePath();
@@ -547,7 +547,7 @@ MainWindow::snapshot()
 void
 MainWindow::setFrameSkip(int i)
 {
-   _labelSkipFrames->setText( QString("Frame skip (%1)").arg(i) );
+   _labelSkipFrames->setText( QString(tr("Frame skip (%1)")).arg(i) );
    if ( _filterThread )
       _filterThread->setFrameSkip( i );
 }
@@ -584,10 +584,10 @@ MainWindow::networkReplyFinished( QNetworkReply* reply )
 {
    if ( reply->error() != QNetworkReply::NoError ) {
       QMessageBox::critical( this,
-                            "Network Error",
-                            "Could not retreive the preset file from"
-                            " the Web. Maybe a problem with your network"
-                            " connection." );
+			     tr("Network Error"),
+			     tr("Could not retreive the preset file from"
+				" the Web. Maybe a problem with your network"
+				" connection.") );
       return;
    }
    globalSettings.setValue( "GetOnlinePresets", true );
@@ -601,9 +601,9 @@ void
 MainWindow::setPresetsFile()
 {
    QString filename = QFileDialog::getOpenFileName( this,
-						   "Open a presets file",
-						   ".",
-						   "Preset files (*.xml)" );
+						    tr("Open a presets file"),
+						    ".",
+						    tr("Preset files (*.xml)") );
    if ( ! filename.isEmpty() ) {
       globalSettings.setValue( "PresetsFile", filename );
       QFile presetsTreeFile( filename );
@@ -622,9 +622,9 @@ void
 MainWindow::savePresetsFile()
 {
    QString filename = QFileDialog::getSaveFileName( this,
-						   "Save presets file",
-						   ".",
-						   "Preset files (*.xml)" );
+						    tr("Save presets file"),
+						    ".",
+						    tr("Preset files (*.xml)") );
    if ( ! filename.isEmpty() ) {
       QFile presetsFile( filename );
       presetsFile.open( QIODevice::WriteOnly );
