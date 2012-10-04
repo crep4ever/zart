@@ -44,12 +44,13 @@
  * knowledge of the CeCILL license and that you accept its terms.
  */
 #include "FilterThread.h"
-#include <iostream>
 #include <QColor>
 #include <QFont>
 #include <QFontMetrics>
 #include <QApplication>
 #include <QPainter>
+#include <QDebug>
+
 #include "gmic.h"
 #include "ImageConverter.h"
 
@@ -216,7 +217,7 @@ FilterThread::run()
                   .get_permute_axes("yzcx")
                   .channel(0).resize(-100,-100,1,3)
                   .draw_text(10,10,"Syntax Error",col1,col2,0.5,57);
-            std::cerr << e.what() << std::endl;
+            qWarning() << e.what();
             QSize size( _webcam.image()->width, _webcam.image()->height );
             if ( _outputImage->size() != size ) {
                _imageMutex->lock();

@@ -44,26 +44,13 @@
  * knowledge of the CeCILL license and that you accept its terms. 
  */
 
-#include <QtGui>
 #include <QtXml>
-#include <QComboBox>
-#include <QLabel>
-#include <QSlider>
-#include <QDoubleSpinBox>
 #include <QFileDialog>
-#include <QFileInfo>
 #include <QImageWriter>
-#include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QMessageBox>
-#include <QAction>
-#include <QActionGroup>
-#include <QList>
 #include <QDesktopServices>
-#include <QUrl>
-#include <QDir>
-#include <QKeySequence>
 #include <QShortcut>
 
 #include "DialogAbout.h"

@@ -43,19 +43,17 @@
  * The fact that you are presently reading this means that you have had
  * knowledge of the CeCILL license and that you accept its terms.
  */
-#include <iostream>
 #include <QPainter>
 #include <QMutex>
+#include <QtGlobal>
 #include "ImageConverter.h"
-#include <cassert>
-#include "Common.h"
 
 IplImage * ImageConverter::_image = 0;
 
 void ImageConverter::convert( const IplImage * in, QImage * out )
 {
-   assert(in->depth== IPL_DEPTH_8U);
-   assert(in->nChannels == 3);
+   Q_ASSERT(in->depth== IPL_DEPTH_8U);
+   Q_ASSERT(in->nChannels == 3);
    const unsigned int w3 = 3 * in->width;
    const unsigned int qiOffset = (w3%4)?(4-(w3%4)):0;
    const unsigned int iplOffset = in->widthStep - w3;
@@ -317,8 +315,8 @@ void ImageConverter::mergeRight( IplImage * iplImage,
 
 void ImageConverter::convert( const IplImage * in, cimg_library::CImg<float> & out )
 {
-   assert(in->depth== IPL_DEPTH_8U);
-   assert(in->nChannels == 3);
+   Q_ASSERT(in->depth== IPL_DEPTH_8U);
+   Q_ASSERT(in->nChannels == 3);
    const int spectrum = out.spectrum();
    float * dstR = out.data( 0,0,0,0 );
    float * dstG = out.data( 0,0,0,(spectrum>=2)?1:0 );

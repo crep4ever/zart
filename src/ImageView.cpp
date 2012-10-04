@@ -51,8 +51,6 @@
 #include <QFrame>
 #include <QLayout>
 #include <QRect>
-#include <iostream>
-#include "Common.h"
 
 ImageView::ImageView( QWidget * parent )
   : QWidget( parent )
