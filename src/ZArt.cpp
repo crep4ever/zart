@@ -55,6 +55,7 @@ int main( int argc, char *argv[] )
   QApplication app( argc, argv );
   app.setWindowIcon( QIcon(":images/icon.png") );
   app.setApplicationName( "ZArt" );
+  QApplication::setApplicationVersion( "1.0.0" );
 
   // Parse command line arguments
   QStringList args = app.arguments();
